@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/_POLICYGAME/Scenes/TitleScreen.unity
+    guid: 7da9ff4aaae51144a967f7cc3e5ff454
+  - enabled: 1
+    path: Assets/_POLICYGAME/Scenes/POLICY_MAIN.unity
+    guid: 753e52e26edc43a47837cef1c8061dc0
   m_configObjects: {}

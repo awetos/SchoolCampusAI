@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1944f94ee50aac4aba4ca66359c7145, type: 3}
+  m_Name: EasyQuestions
+  m_EditorClassIdentifier: 
+  QuestionsText:
+  - In the past 14 days, have you been exposed to anyone who tested positive for
+    COVID-19?
+  - Have you had fevers, chills, or coughing?
+  - 'How far apart should you stay from people? '
+  Yes_text:
+  - Yes
+  - Yes
+  - Six Feet
+  No_text:
+  - No
+  - No
+  - Three Meters
