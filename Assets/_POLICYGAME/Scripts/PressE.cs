@@ -30,7 +30,8 @@ public class PressE : MonoBehaviour
         {
             answersptr.StartQuestionnaire();
             myFPM.enabled = false;
-            myFPL.enabled = false;
+            myFPL.StopCamera();
+            //myFPL.enabled = false;
         }
     }
 }

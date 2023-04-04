@@ -25,8 +25,7 @@ public class EndGame : MonoBehaviour
 
     void ReturnToMainMenu()
     {
-        GameObject go = GameObject.FindGameObjectWithTag("Sounds");
-        Destroy(go);
+      
         SceneManager.LoadScene(MainMenu);
     }
 
@@ -34,13 +33,16 @@ public class EndGame : MonoBehaviour
 
     public void OnEndGame(string reason)
     {
+        FPL.StopCamera();
         GunshotSound.Play();
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         if (FPL.enabled == true)
         {
-            FPL.enabled = false;
+          
+           
             FPM.enabled = false;
+            FPL.enabled = false;
         }
         reason_text.text = reason;
         StartCoroutine("FadeIntoScene");

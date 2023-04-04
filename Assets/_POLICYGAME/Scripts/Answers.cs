@@ -24,7 +24,9 @@ public class Answers : MonoBehaviour
         yes_button.onClick.AddListener(AnsweredYes);
         no_button.onClick.AddListener(AnsweredNo);
 
-        if(responses == null)
+        SetUpForNextQuestion();
+
+        if (responses == null)
         {
             responses = new List<string>();
         }
@@ -38,40 +40,48 @@ public class Answers : MonoBehaviour
 
     void AnsweredYes()
     {
-        responses.Add("Yes");
+        responses.Add(leftButton.text);
         boomSound.Play();
         yes_button.interactable = false;
         no_button.interactable = false;
         GoToNextQuestion();
 
     }
+    [SerializeField] TMPro.TMP_Text leftButton;
+    [SerializeField] TMPro.TMP_Text rightButton;
+    [SerializeField] QuestionsObject questionsList;
 
     void AnsweredNo()
     {
-        responses.Add("No");
+        responses.Add(rightButton.text);
         boomSound.Play();
         yes_button.interactable = false;
         no_button.interactable = false;
         GoToNextQuestion();
     }
-
+    [SerializeField] DangerMeasurer dangerMeasurer;
     int currentQuestionNumber;
     void GoToNextQuestion()
     {
-        if(questions == null)
+        if (responses[currentQuestionNumber] != correctAnswersRef.answers[currentQuestionNumber])
+        {
+            dangerMeasurer.IncreaseDanger();
+        }
+        if(questionsList == null)
         {
             Die();
         }
         else
         {
             currentQuestionNumber++;
-            if(currentQuestionNumber > questions.Count)
+            if(currentQuestionNumber >= questionsList.QuestionsText.Count)
             {
                 canvas.enabled = false;
                 ProcessResults();
             }
             else
             {
+                SetUpForNextQuestion();
                 yes_button.interactable = true;
                 no_button.interactable = true;
             }
@@ -80,11 +90,45 @@ public class Answers : MonoBehaviour
        
     }
 
-    [SerializeField] SceneReference MainMenu;
+    void SetUpForNextQuestion()
+    {
+        leftButton.text = questionsList.Yes_text[currentQuestionNumber];
+        rightButton.text = questionsList.No_text[currentQuestionNumber];
+        question_text.text = questionsList.QuestionsText[currentQuestionNumber];
+    }
 
+    [SerializeField] SceneReference MainMenu;
+    [SerializeField] CorrectAnswers correctAnswersRef;
     void ProcessResults()
     {
-        Die();
+        bool AllCorrect = true;
+        for(int i = 0; i < correctAnswersRef.answers.Count; i++)
+        {
+            Debug.Log("comparing " + responses[i] +" and " + correctAnswersRef.answers[i]);
+
+            if (responses[i].Equals(correctAnswersRef.answers[i]))
+            {
+                Debug.Log("correct");
+                continue;
+            }
+            else
+            {
+                Debug.Log("incorrect");
+                AllCorrect = false;
+            
+            }
+        }
+
+        if(AllCorrect == true)
+        {
+            Win();
+        }
+        else
+        {
+            Die();
+        }
+       
+        
     }
 
     [SerializeField] EndGame endgameptr;
@@ -93,9 +137,10 @@ public class Answers : MonoBehaviour
         endgameptr.OnEndGame("You have been determined to be a security threat.");
     }
 
+    [SerializeField] GameObject winscreen;
     void Win()
     {
-
+        winscreen.SetActive(true);
     }
     
 }
