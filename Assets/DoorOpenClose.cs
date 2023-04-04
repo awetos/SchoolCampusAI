@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 public class DoorOpenClose : MonoBehaviour
@@ -14,13 +15,36 @@ public class DoorOpenClose : MonoBehaviour
         CloseDoor();
     }
 
-    void OpenDoor()
+    public void OpenDoor()
     {
-        transform.localPosition = Vector3.Lerp(ClosePosition,OpenPosition, 1f);
+        StartCoroutine("OpenDoorAnimation");
     }
-    void CloseDoor()
+    public void CloseDoor()
     {
-        transform.localPosition = Vector3.Lerp(OpenPosition, ClosePosition, 1f);
+
+        StartCoroutine("CloseDoorAnimation");
+    }
+    const int MAX = 20;
+    IEnumerator OpenDoorAnimation()
+    {
+        for(int i = 0; i < MAX; i++)
+        {
+            float t = (float)i / (float)MAX;
+            transform.localPosition = Vector3.Lerp(ClosePosition, OpenPosition, t);
+            yield return new WaitForSeconds(0.01f);
+        }
+        yield return null;
     }
 
+    IEnumerator CloseDoorAnimation()
+    {
+
+        for (int i = 0; i < MAX; i++)
+        {
+            float t = (float)i / (float)MAX;
+            transform.localPosition = Vector3.Lerp(OpenPosition, ClosePosition, t);
+            yield return new WaitForSeconds(0.01f);
+        }
+        yield return null;
+    }
 }
